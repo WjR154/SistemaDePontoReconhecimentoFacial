@@ -8,13 +8,13 @@ from cadastro import cadastrar_funcionario
 janela = tk.Tk()
 
 janela.title("Sistema de Ponto Facial")
-janela.geometry("400x350")
+janela.geometry("500x400")
 
 
 def cadastrar():
 
-    codigo = entrada_codigo.get()
-    nome = entrada_nome.get()
+    codigo = entrada_codigo.get().strip()
+    nome = entrada_nome.get().strip()
 
     if not codigo or not nome:
 
@@ -38,9 +38,9 @@ def cadastrar():
 
     else:
 
-        messagebox.showwarning(
-            "Aviso",
-            "Cadastro cancelado."
+        messagebox.showerror(
+            "Erro",
+            "ID já cadastrado."
         )
 
 
@@ -49,7 +49,8 @@ def mostrar_registros():
     texto = consultar_registros()
 
     janela_consulta = tk.Toplevel(janela)
-    janela_consulta.title("Registros")
+    janela_consulta.title("Registros de Ponto")
+    janela_consulta.geometry("700x400")
 
     area = tk.Text(janela_consulta)
 

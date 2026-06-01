@@ -4,6 +4,21 @@ import os
 
 def cadastrar_funcionario(codigo, nome):
 
+    if os.path.exists("funcionarios.txt"):
+
+        with open(
+            "funcionarios.txt",
+            "r",
+            encoding="utf-8"
+        ) as arquivo:
+
+            for linha in arquivo:
+
+                id_existente, _ = linha.strip().split(";")
+
+                if id_existente == codigo:
+                    return False
+
     with open(
         "funcionarios.txt",
         "a",
@@ -23,5 +38,6 @@ def cadastrar_funcionario(codigo, nome):
 
     if sucesso:
         treinar_modelo()
+        return True
 
-    return sucesso  
+    return False

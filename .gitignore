@@ -1,0 +1,31 @@
+# Ambiente virtual
+.venv/
+venv/
+
+# Cache do Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Configurações do PyCharm
+.idea/
+
+# Arquivos do sistema
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+
+# Modelo treinado
+modelo/modelo.yml
+
+# Registros de ponto
+registros/ponto.txt
+
+# Dataset de treinamento (fotos)
+dataset/
+
+# Arquivos temporários
+*.tmp
