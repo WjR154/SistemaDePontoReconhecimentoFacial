@@ -1,8 +1,17 @@
+import os
+
+
 def consultar_registros():
 
-    try:
-        with open("ponto.txt", "r", encoding="utf-8") as arquivo:
-            return arquivo.read()
+    caminho = "registros/ponto.txt"
 
-    except FileNotFoundError:
+    if not os.path.exists(caminho):
         return "Nenhum registro encontrado."
+
+    with open(
+            caminho,
+            "r",
+            encoding="utf-8"
+    ) as arquivo:
+
+        return arquivo.read()

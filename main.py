@@ -19,10 +19,11 @@ janela.configure(bg=COR_FUNDO)
 janela.resizable(False, False)
 
 
+
 def cadastrar():
 
-    codigo = entrada_codigo.get()
-    nome = entrada_nome.get()
+    codigo = entrada_codigo.get().strip()
+    nome = entrada_nome.get().strip()
 
     if not codigo or not nome:
 
@@ -46,9 +47,9 @@ def cadastrar():
 
     else:
 
-        messagebox.showwarning(
-            "Aviso",
-            "Cadastro cancelado."
+        messagebox.showerror(
+            "Erro",
+            "ID já cadastrado."
         )
 
 
