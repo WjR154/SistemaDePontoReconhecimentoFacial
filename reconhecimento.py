@@ -106,9 +106,6 @@ def reconhecer_usuario():
 
     camera = cv2.VideoCapture(0)
 
-    codigo_reconhecido = None
-    nome_reconhecido = None
-
     while True:
 
         ret, frame = camera.read()
@@ -148,9 +145,6 @@ def reconhecer_usuario():
                     "Desconhecido"
                 )
 
-                codigo_reconhecido = id_usuario
-                nome_reconhecido = nome
-
                 cv2.putText(
                     frame,
                     f"Funcionario: {nome}",
@@ -161,25 +155,61 @@ def reconhecer_usuario():
                     2
                 )
 
-                cv2.putText(
-                    frame,
-                    "ENTER = Confirmar Ponto",
-                    (20, 80),
-                    cv2.FONT_HERSHEY_SIMPLEX,
-                    0.7,
-                    (0, 255, 255),
-                    2
-                )
+                if not ponto_ja_registrado(id_usuario):
 
-                cv2.putText(
-                    frame,
-                    "ESC = Cancelar",
-                    (20, 120),
-                    cv2.FONT_HERSHEY_SIMPLEX,
-                    0.7,
-                    (0, 255, 255),
-                    2
-                )
+                    registrar_ponto(
+                        id_usuario,
+                        nome
+                    )
+
+                    cv2.putText(
+                        frame,
+                        "PONTO REGISTRADO",
+                        (20, 80),
+                        cv2.FONT_HERSHEY_SIMPLEX,
+                        0.8,
+                        (0, 255, 0),
+                        2
+                    )
+
+                    cv2.imshow(
+                        "Sistema de Ponto Facial",
+                        frame
+                    )
+
+                    cv2.waitKey(2000)
+
+                    print(
+                        f"Ponto registrado para {nome}"
+                    )
+
+                else:
+
+                    cv2.putText(
+                        frame,
+                        "PONTO JA REGISTRADO HOJE",
+                        (20, 80),
+                        cv2.FONT_HERSHEY_SIMPLEX,
+                        0.8,
+                        (0, 0, 255),
+                        2
+                    )
+
+                    cv2.imshow(
+                        "Sistema de Ponto Facial",
+                        frame
+                    )
+
+                    cv2.waitKey(2000)
+
+                    print(
+                        f"{nome} ja registrou ponto hoje."
+                    )
+
+                camera.release()
+                cv2.destroyAllWindows()
+
+                return
 
             else:
 
@@ -198,37 +228,7 @@ def reconhecer_usuario():
             frame
         )
 
-        tecla = cv2.waitKey(1)
-
-        # ENTER
-        if tecla == 13:
-
-            if codigo_reconhecido is not None:
-
-                if not ponto_ja_registrado(
-                        codigo_reconhecido):
-
-                    registrar_ponto(
-                        codigo_reconhecido,
-                        nome_reconhecido
-                    )
-
-                    print(
-                        f"Ponto registrado para "
-                        f"{nome_reconhecido}"
-                    )
-
-                else:
-
-                    print(
-                        f"{nome_reconhecido} "
-                        f"ja registrou ponto hoje."
-                    )
-
-                break
-
-        # ESC
-        elif tecla == 27:
+        if cv2.waitKey(1) == 27:
             break
 
     camera.release()
